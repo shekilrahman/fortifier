@@ -1,6 +1,192 @@
-.home{
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    color:aliceblue;
+/* Container for the entire Home component */
+.home {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+}
+
+/* 3D canvas container */
+.canvasContainer {
+  width: 100vw;
+  height: 100vh;
+}
+
+.pageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+
+  /* Hide scrollbar for Webkit (Chrome, Safari) */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.pageContainer::-webkit-scrollbar {
+  display: none;
+}
+
+
+.pageContainer .inter{
+  pointer-events: auto; 
+}
+
+/* Logo container placed absolutely and centered */
+.logoContainer {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  right: 20%;
+  transform: translate(0, 0);
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+/* Logo image styling */
+.logoImage {
+  width: 400px;
+  max-width: 80%;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.logoImage:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation bar styles */
+.appBar {
+  position: fixed;
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+  background-color: black;
+  z-index: 2;
+}
+
+/* Title text */
+.title {
+  flex-grow: 1;
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+/* Optional: button styles inside AppBar (if needed) */
+.appBar .navBtn {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: 10px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.appBar .navBtn:hover {
+  color: #f44336; /* red accent on hover */
+}
+
+.heroSection {
+  padding: 0rem 2rem 4rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ctaBtn {
+  background-color: #ff9900;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 2rem;
+}
+
+.servicesSection {
+  padding: 4rem 2rem;
+  background: #f7f7f7;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.servicesGrid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.serviceCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 300px;
+  text-align: center;
+}
+
+.testimonialsSection {
+  padding: 4rem 2rem;
+  background: #e3f2fd;
+}
+
+.testimonialCard {
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.footer {
+  padding: 1.5rem 0;
+  background: #222;
+  color: #aaa;
+}
+
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+.logoContainer {
+  top: 20%;
+  right: 0;
+}
+}
+
+
+@media (max-width: 600px) {
+
+  .logoImage {
+    width: 300px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
 }
