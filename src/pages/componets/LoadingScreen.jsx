@@ -1,4 +1,3 @@
-// Enhanced LoadingScreen.js with resource tracking
 import styles from "./LoadingScreen.module.css";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -8,10 +7,8 @@ export default function LoadingScreen({ onLoadingComplete }) {
   const dotsRef = useRef([]);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
-  const [resourcesLoaded, setResourcesLoaded] = useState(0);
   const [totalResources, setTotalResources] = useState(0);
 
-  // Create dot positions (36 dots for 10-degree intervals)
   const numberOfDots = 36;
   const dots = Array.from({ length: numberOfDots }, (_, i) => ({
     id: i,
@@ -19,39 +16,28 @@ export default function LoadingScreen({ onLoadingComplete }) {
   }));
 
   useEffect(() => {
-    let resourceCounter = 0;
     let loadedCounter = 0;
 
-    // Count all resources that need to be loaded
     const countResources = () => {
       const images = document.querySelectorAll("img");
       const scripts = document.querySelectorAll("script[src]");
       const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-
       return images.length + scripts.length + stylesheets.length;
     };
 
-    // Track resource loading
+    const updateProgress = () => {
+      const total = countResources();
+      setTotalResources(total);
+
+      const percentage = Math.min((loadedCounter / total) * 100, 100);
+      setLoadingProgress(percentage);
+
+      if (loadedCounter >= total && document.readyState === "complete") {
+        setIsPageLoaded(true);
+      }
+    };
+
     const trackResourceLoading = () => {
-      const updateProgress = () => {
-        const total = countResources();
-        setTotalResources(total);
-
-        if (total === 0) {
-          setLoadingProgress(100);
-          setIsPageLoaded(true);
-          return;
-        }
-
-        const percentage = Math.min((loadedCounter / total) * 100, 100);
-        setLoadingProgress(percentage);
-
-        if (loadedCounter >= total && document.readyState === "complete") {
-          setIsPageLoaded(true);
-        }
-      };
-
-      // Track images
       const images = document.querySelectorAll("img");
       images.forEach((img) => {
         if (img.complete) {
@@ -68,7 +54,6 @@ export default function LoadingScreen({ onLoadingComplete }) {
         }
       });
 
-      // Track scripts
       const scripts = document.querySelectorAll("script[src]");
       scripts.forEach((script) => {
         if (
@@ -88,7 +73,6 @@ export default function LoadingScreen({ onLoadingComplete }) {
         }
       });
 
-      // Track stylesheets
       const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
       stylesheets.forEach((link) => {
         try {
@@ -104,7 +88,7 @@ export default function LoadingScreen({ onLoadingComplete }) {
               updateProgress();
             });
           }
-        } catch (e) {
+        } catch {
           loadedCounter++;
         }
       });
@@ -112,37 +96,24 @@ export default function LoadingScreen({ onLoadingComplete }) {
       updateProgress();
     };
 
-    // Initial document ready state tracking
     const updateDocumentState = () => {
-      if (document.readyState === "loading") {
-        setLoadingProgress(Math.max(loadingProgress, 10));
-      } else if (document.readyState === "interactive") {
-        setLoadingProgress(Math.max(loadingProgress, 50));
+      if (document.readyState === "interactive") {
         trackResourceLoading();
       } else if (document.readyState === "complete") {
         trackResourceLoading();
       }
     };
 
-    updateDocumentState();
-
-    // Listen for readyState changes
     document.addEventListener("readystatechange", updateDocumentState);
-
-    // Window load event
-    const handleWindowLoad = () => {
+    window.addEventListener("load", () => {
       setLoadingProgress(100);
       setIsPageLoaded(true);
-    };
+    });
 
-    window.addEventListener("load", handleWindowLoad);
-
-    // Fallback: If page is already loaded
     if (document.readyState === "complete") {
       trackResourceLoading();
     }
 
-    // Initial blinking animation during loading
     const blinkTimeline = gsap.timeline({ repeat: -1, yoyo: true });
     blinkTimeline.to(circleRef.current, {
       opacity: 0.3,
@@ -150,29 +121,23 @@ export default function LoadingScreen({ onLoadingComplete }) {
       ease: "power2.inOut",
     });
 
-    // Cleanup function
     return () => {
       document.removeEventListener("readystatechange", updateDocumentState);
-      window.removeEventListener("load", handleWindowLoad);
       blinkTimeline.kill();
     };
   }, []);
 
   useEffect(() => {
-    // Only start the circular glowing animation after page is actually loaded
     if (isPageLoaded && loadingProgress >= 100 && dotsRef.current.length > 0) {
-      // Stop blinking
       gsap.killTweensOf(circleRef.current);
       gsap.set(circleRef.current, { opacity: 1 });
 
-      // Set all dots to initial state (dim)
       gsap.set(dotsRef.current, {
         opacity: 0.2,
         scale: 0.8,
         backgroundColor: "#4a90e2",
       });
 
-      // Create sequential glow animation
       const glowTimeline = gsap.timeline({
         onComplete: () => {
           gsap.to(circleRef.current, {
@@ -180,14 +145,12 @@ export default function LoadingScreen({ onLoadingComplete }) {
             scale: 10,
             backgroundColor: "#ff0000ff",
           });
-          // Wait a bit after animation completes, then call onLoadingComplete
           setTimeout(() => {
             onLoadingComplete();
           }, 500);
         },
       });
 
-      const totalDots = dotsRef.current.length;
       dotsRef.current.forEach((dot, index) => {
         glowTimeline.to(
           dot,
@@ -200,7 +163,7 @@ export default function LoadingScreen({ onLoadingComplete }) {
             duration: 0.15,
             ease: "power2.out",
           },
-          (totalDots - 1 - index) * 0.05
+          (dotsRef.current.length - 1 - index) * 0.05
         );
       });
     }
@@ -210,7 +173,6 @@ export default function LoadingScreen({ onLoadingComplete }) {
     <div className={styles.loadingScreen}>
       <div className={styles.loadingContainer}>
         <div ref={circleRef} className={styles.dottedCircle}>
-          {/* Render individual dots */}
           {dots.map((dot, index) => (
             <div
               key={dot.id}
@@ -221,16 +183,8 @@ export default function LoadingScreen({ onLoadingComplete }) {
               }}
             />
           ))}
-          <div className={styles.progressText}>
-            {!isPageLoaded ? `${Math.round(loadingProgress)}%` : "FORTIFIER"}
-          </div>
+          <div className={styles.progressText}>LOADING</div>
         </div>
-        {/* Optional: Show loading details */}
-        {!isPageLoaded && totalResources > 0 && (
-          <div className={styles.loadingDetails}>
-            Loading resources: {resourcesLoaded}/{totalResources}
-          </div>
-        )}
       </div>
     </div>
   );

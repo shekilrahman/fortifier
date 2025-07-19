@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import logo from "../../assets/logo_w.png";
 import { Link } from "react-router-dom";
+import withLoading from "../componets/withLoading";
 
 // Controls spotlight and camera to follow target
 function CameraAndLightController({ cameraRef, spotlightRef, targetRef }) {
@@ -229,4 +230,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withLoading(Home);
