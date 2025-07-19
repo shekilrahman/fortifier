@@ -1,0 +1,30 @@
+import { OrbitControls } from '@react-three/drei'
+import React, { useEffect, useRef } from 'react'
+import { Cctv } from '../models/Cctv'
+import gsap from 'gsap'
+
+const Scene = () => {
+  const camRef = useRef(null)
+
+  function degToRad(degrees) {
+    return degrees * (Math.PI / 180)
+  }
+
+  return (
+    <>
+      <OrbitControls />
+       <spotLight
+          decay={0}
+          position={[0, 0, 10]}
+          angle={Math.PI/11}
+          penumbra={1}
+          intensity={5}
+          castShadow
+          shadow-mapSize={1024}
+        />
+      <Cctv ref={camRef}  />
+    </>
+  )
+}
+
+export default Scene
