@@ -1,39 +1,19 @@
-import styles from "./Home.module.css";
-import { Box, AppBar, Toolbar, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import withLoading from "../../components/withLoading";
-import FullScene3D from "../../components/FullScene3D";
+import React, { Suspense } from 'react';
+import Scene from './components/Scene';
+import Overlay from './components/Overlay';
+import { ReactLenis } from 'lenis/react';
 
-function Home() {
+const Home = () => {
   return (
-    <Box className={styles.home}>
-      {/* Full 3D Scene */}
-      <FullScene3D />
-
-      {/* Minimal Navigation Overlay */}
-      <AppBar position="fixed" className={styles.appBar} color="transparent" elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" className={styles.title}>
-            FORTIFIER
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Link className={`${styles.navBtn}`} to="/about">
-            About
-          </Link>
-          <Link className={`${styles.navBtn}`} to="/contact">
-            Contact
-          </Link>
-        </Toolbar>
-      </AppBar>
-
-      {/* Scroll Indicator */}
-      <Box className={styles.scrollIndicator}>
-        <Typography variant="caption" sx={{ color: '#666', writingMode: 'vertical-rl' }}>
-          SCROLL TO EXPLORE
-        </Typography>
-      </Box>
-    </Box>
+    <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: '#050505' }}>
+      <Overlay />
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 5, pointerEvents: 'none' }}>
+        <Suspense fallback={<div className="loading">INITIALIZING SYSTEM...</div>}>
+          <Scene />
+        </Suspense>
+      </div>
+    </div>
   );
-}
+};
 
-export default withLoading(Home);
+export default Home;

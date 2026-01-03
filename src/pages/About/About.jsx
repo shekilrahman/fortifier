@@ -1,12 +1,16 @@
-import styles from "./About.module.css";
+import React, { Suspense } from 'react';
+import Scene from './components/Scene';
+import Overlay from './components/Overlay';
 import withLoading from "../../components/withLoading";
 
 function About() {
   return (
-    <div className={styles.about}>
-      <div className={styles.content}>
-        <h1>About FORTIFIER</h1>
-        <p>This is the about page content...</p>
+    <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: '#050505' }}>
+      <Overlay />
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 5, pointerEvents: 'none' }}>
+        <Suspense fallback={<div className="loading">INITIALIZING SYSTEM...</div>}>
+          <Scene />
+        </Suspense>
       </div>
     </div>
   );
