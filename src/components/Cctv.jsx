@@ -4,10 +4,9 @@ import { forwardRef } from "react";
 
 export const Cctv = forwardRef((props, ref) => {
   const { refHead } = props;
-  const { nodes, materials } = useGLTF("./models/Cctv.glb");
+  const { nodes, materials } = useGLTF("/models/Cctv.glb");
   return (
     <group
-      
       {...props}
       dispose={null}
       rotation={[0, Math.PI + Math.PI / 2, 0]}
@@ -46,4 +45,4 @@ export const Cctv = forwardRef((props, ref) => {
     </group>
   );
 });
-useGLTF.preload("./models/Cctv.glb");
+useGLTF.preload("/models/Cctv.glb");

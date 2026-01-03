@@ -1,192 +1,80 @@
-/* Container for the entire Home component */
 .home {
   position: relative;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   background-color: #000;
 }
 
-/* 3D canvas container */
-.canvasContainer {
-  width: 100vw;
-  height: 100vh;
-}
-
-.pageContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  /* Hide scrollbar for Firefox */
-  scrollbar-width: none;
-
-  /* Hide scrollbar for Webkit (Chrome, Safari) */
-  -ms-overflow-style: none;  /* IE and Edge */
-}
-.pageContainer::-webkit-scrollbar {
-  display: none;
-}
-
-
-.pageContainer .inter{
-  pointer-events: auto; 
-}
-
-/* Logo container placed absolutely and centered */
-.logoContainer {
-  position: absolute;
-  width: 100%;
-  top: 40%;
-  right: 20%;
-  transform: translate(0, 0);
-  z-index: 2;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-}
-
-/* Logo image styling */
-.logoImage {
-  width: 400px;
-  max-width: 80%;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
-  transition: transform 0.3s ease;
-}
-
-.logoImage:hover {
-  transform: scale(1.05);
-}
-
-/* Navigation bar styles */
+/* Navbar */
 .appBar {
-  position: fixed;
-  box-shadow: none;
-  backdrop-filter: blur(8px);
-  background-color: black;
-  z-index: 2;
+  background: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  pointer-events: auto;
+  z-index: 1000;
 }
 
-/* Title text */
 .title {
-  flex-grow: 1;
-  font-weight: bold;
-  font-size: 1.4rem;
-  letter-spacing: 1px;
-  color: #fff;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
-/* Optional: button styles inside AppBar (if needed) */
-.appBar .navBtn {
-  color: #fff;
-  font-weight: 500;
-  transition: color 0.2s ease;
+.navBtn {
+  color: #ccc;
+  font-weight: 600;
   text-decoration: none;
+  margin-left: 30px;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
   text-transform: uppercase;
-  margin-left: 10px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
 
-.appBar .navBtn:hover {
-  color: #f44336; /* red accent on hover */
+.navBtn:hover {
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
 }
 
-.heroSection {
-  padding: 0rem 2rem 4rem;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  text-align: center;
+/* Scroll Indicator */
+.scrollIndicator {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 100;
+  pointer-events: none;
+  animation: pulse 2s infinite;
 }
 
-.heroTitle {
-  font-size: 3rem;
-  font-weight: bold;
-}
+@keyframes pulse {
 
-.heroSubtitle {
-  font-size: 1.25rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.ctaBtn {
-  background-color: #ff9900;
-  color: white;
-  font-weight: bold;
-  padding: 0.75rem 2rem;
-}
-
-.servicesSection {
-  padding: 4rem 2rem;
-  background: #f7f7f7;
-}
-
-.sectionTitle {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.servicesGrid {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.serviceCard {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 300px;
-  text-align: center;
-}
-
-.testimonialsSection {
-  padding: 4rem 2rem;
-  background: #e3f2fd;
-}
-
-.testimonialCard {
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.footer {
-  padding: 1.5rem 0;
-  background: #222;
-  color: #aaa;
-}
-
-
-/* Responsive tweaks */
-@media (max-width: 900px) {
-.logoContainer {
-  top: 20%;
-  right: 0;
-}
-}
-
-
-@media (max-width: 600px) {
-
-  .logoImage {
-    width: 300px;
+  0%,
+  100% {
+    opacity: 0.5;
   }
 
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
   .title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  .navBtn {
+    font-size: 0.8rem;
+    margin-left: 15px;
+  }
+
+  .scrollIndicator {
+    right: 1rem;
+    bottom: 1rem;
   }
 }

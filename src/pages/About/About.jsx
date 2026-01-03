@@ -1,5 +1,5 @@
 import styles from "./About.module.css";
-import withLoading from "../componets/withLoading";
+import withLoading from "../../components/withLoading";
 
 function About() {
   return (
