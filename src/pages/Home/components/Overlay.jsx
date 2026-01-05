@@ -5,19 +5,20 @@ import styles from './Overlay.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Section = ({ align, title, children, className = "" }) => {
+const Section = ({ align, title, children, className = "", type = "behind" }) => {
     // Map align prop to css class
     const alignClass = styles[align] || styles.left;
+    const typeClass = styles[type] || styles.behind;
 
     return (
         <section
             className={`section-content ${styles.section} ${alignClass} ${className}`}
         >
-            <div className={`section-inner ${styles.sectionInner}`}>
-                <h2 className={`${styles.title} ${styles.behind}`}>
+            <div className={`section-inner ${styles.sectionInner} ${typeClass}`}>
+                <h2 className={styles.title}>
                     {title}
                 </h2>
-                <div className={`${styles.description} ${styles.behind}`}>
+                <div className={styles.description}>
                     {children}
                 </div>
             </div>
@@ -71,7 +72,7 @@ const Overlay = () => {
             </section>
 
             {/* OVERVIEW - LEFT */}
-            <Section align="left" title="Complete Protection">
+            <Section align="left" title="Complete Protection" type="front">
                 <p>
                     Get complete security with high definition cameras, intelligent alarm systems
                     and video doorbell intercoms. We seamlessly upgrade your protection to
@@ -83,7 +84,7 @@ const Overlay = () => {
             </Section>
 
             {/* SERVICES - RIGHT */}
-            <Section align="right" title="Our Services">
+            <Section align="right" title="Our Services" type='front'>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                     {[
                         "Home Security Systems",
@@ -103,7 +104,7 @@ const Overlay = () => {
             </Section>
 
             {/* BENEFITS - LEFT */}
-            <Section align="left" title="Smart Integration">
+            <Section align="left" title="Smart Integration" type='front'>
                 <p>
                     Protect your assets with smart HD security cameras and state-of-the-art access control.
                     Our intelligent intrusion detection keeps you protected 24/7.
@@ -121,7 +122,7 @@ const Overlay = () => {
             </Section>
 
             {/* TRUST/EXPERTISE - RIGHT */}
-            <Section align="right" title="Trusted Brand">
+            <Section align="right" title="Trusted Brand" type='front'>
                 <p>
                     "With a reliable layer of protection added to your premises, you’ll be able to sleep
                     soundly knowing that the things you care about are safe."
@@ -137,7 +138,7 @@ const Overlay = () => {
             </Section>
 
             {/* CTA - CENTER */}
-            <Section align="center" title="Free Onsite Assessment" className="cta-section">
+            <Section align="center" title="Free Onsite Assessment" className="cta-section" type='front'>
                 <p style={{ marginBottom: '3rem' }}>
                     Need security but don't know where to start? Get a quick free quote today.
                 </p>
