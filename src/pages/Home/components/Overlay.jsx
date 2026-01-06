@@ -72,14 +72,12 @@ const Overlay = () => {
             </section>
 
             {/* OVERVIEW - LEFT */}
-            <Section align="left" title="Complete Protection" type="front">
+            <Section align="left" title="What Sets Fortifier Apart" type="front">
                 <p>
-                    Get complete security with high definition cameras, intelligent alarm systems
-                    and video doorbell intercoms. We seamlessly upgrade your protection to
-                    advanced standards.
+                    Security should work when you need it - without confusion or callbacks. That’s why every Fortifier system is planned properly, installed cleanly, and handed over in a way that actually makes sense. You’ll know how your system works, and you’ll know who to call if you ever need support.
                 </p>
                 <p style={{ marginTop: '1rem' }}>
-                    Control all your security - cameras, alarms, and video doorbells - using just one app.
+                    Every installation is backed by our lifetime workmanship guarantee, giving you long-term confidence that the job has been done right.
                 </p>
             </Section>
 
@@ -87,14 +85,15 @@ const Overlay = () => {
             <Section align="right" title="Our Services" type='front'>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                     {[
-                        "Home Security Systems",
-                        "Business Security Upgrades",
-                        "Intelligent Alarm Systems",
-                        "Whole Home Wi-Fi Installation"
+                        "CCTV Camera Systems : Clear, reliable monitoring day and night",
+                        "Alarm Systems : Intelligent intrusion detection you can depend on",
+                        "Video Doorbells & Intercoms : See and speak to visitors from anywhere",
+                        "Access Control : Confident control over who enters your property",
+                        "System Upgrades & Maintenance : Improve or expand existing systems"
                     ].map((item, i) => (
                         <li key={i} style={{
                             marginBottom: '1rem',
-                            borderBottom: '1px solid rgba(255,255,255,0.1)',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.51)',
                             paddingBottom: '0.5rem'
                         }}>
                             {item}
@@ -104,21 +103,11 @@ const Overlay = () => {
             </Section>
 
             {/* BENEFITS - LEFT */}
-            <Section align="left" title="Smart Integration" type='front'>
+            <Section align="left" title="Lifetime Workmanship Guarantee" type='front'>
                 <p>
-                    Protect your assets with smart HD security cameras and state-of-the-art access control.
-                    Our intelligent intrusion detection keeps you protected 24/7.
+                    Every Fortifier installation is backed by a lifetime workmanship guarantee. If an issue arises due to how your system was installed, we’ll fix it — no hassle, no runaround.
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
-                    <div>
-                        <h4 style={{ color: '#ff1a1a', margin: '0 0 0.5rem' }}>MOBILE CONTROL</h4>
-                        <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>Receive mobile alerts of intruders and control gates/garages remotely.</span>
-                    </div>
-                    <div>
-                        <h4 style={{ color: '#ff1a1a', margin: '0 0 0.5rem' }}>WI-FI ZONES</h4>
-                        <span style={{ fontSize: '0.9rem', opacity: 0.7 }}>Eliminate dead zones with our whole home connectivity solutions.</span>
-                    </div>
-                </div>
+
             </Section>
 
             {/* TRUST/EXPERTISE - RIGHT */}
@@ -128,7 +117,7 @@ const Overlay = () => {
                     soundly knowing that the things you care about are safe."
                 </p>
                 <p style={{ marginTop: '1.5rem', fontStyle: 'italic', color: '#ff1a1a' }}>
-                    — Precision Security Australia™
+                    — Fortifier
                 </p>
                 <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end', opacity: 0.6 }}>
                     <span>Hikvision Authorized</span>
@@ -138,9 +127,10 @@ const Overlay = () => {
             </Section>
 
             {/* CTA - CENTER */}
-            <Section align="center" title="Free Onsite Assessment" className="cta-section" type='front'>
+            <Section align="center" title="Get a Free Quote" className="cta-section" type='front'>
                 <p style={{ marginBottom: '3rem' }}>
-                    Need security but don't know where to start? Get a quick free quote today.
+                    If you’re considering a new security system or upgrading an existing one, we’re here to help. We’ll take the time to understand your property and recommend a solution that actually suits your needs.
+                    No pressure. No confusing tech talk. Just clear advice and professional installation.
                 </p>
                 <div className={styles.front}>
                     <button className={styles.button}>
@@ -148,10 +138,6 @@ const Overlay = () => {
                     </button>
                 </div>
             </Section>
-
-            <div style={{ position: 'fixed', bottom: '2rem', left: '2rem', opacity: 0.5, fontSize: '0.8rem', letterSpacing: '0.1em' }}>
-                SCROLL TO EXPLORE
-            </div>
 
             {/* Floating Contact Actions */}
             <div className={styles.floatingActions}>
