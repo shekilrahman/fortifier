@@ -22,6 +22,21 @@
     text-decoration: none;
     letter-spacing: -0.05em;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+}
+
+.logoShort {
+    display: none;
+}
+
+.logoFull {
+    display: block;
 }
 
 .links {
@@ -114,6 +129,14 @@
 @media (max-width: 768px) {
     .nav {
         padding: 1rem 1.5rem;
+    }
+
+    .logoFull {
+        display: none;
+    }
+
+    .logoShort {
+        display: block;
     }
 
     .navToggle {

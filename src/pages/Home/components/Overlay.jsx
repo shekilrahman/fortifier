@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Overlay.module.css';
+import logo from '../../../assets/FORTIFIER.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,7 +68,7 @@ const Overlay = () => {
             {/* HERO SECTION */}
             <section className={styles.hero}>
                 <h1 className={`${styles.heroTitle} ${styles.behind}`}>
-                    FORTIFIER<span style={{ color: '#ff1a1a' }}>.</span>
+                    <img src={logo} alt="Logo" />
                 </h1>
             </section>
 

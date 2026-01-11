@@ -88,6 +88,14 @@
     top: -150px;
 }
 
+.heroTitle img {
+    width: 80vw;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
 
 .button {
     pointer-events: auto;

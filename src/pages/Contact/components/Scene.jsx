@@ -154,6 +154,9 @@ function CameraRig({ cctvRef, headRef }) {
             // HEAD
             const headPos = lerpArray(startData.headposition, endData.headposition, progress);
             const headRot = lerpArray(startData.headrotation, endData.headrotation, progress);
+            if (cctvRef.current.setHeadRotation) {
+                cctvRef.current.setHeadRotation(...headRot);
+            }
 
             // Floating animation (Updated Step 317 logic: set directly)
             const t = state.clock.getElapsedTime();

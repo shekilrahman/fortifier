@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
+import logo from '../assets/FORTIFIER_FULL.svg';
+import shortLogo from '../assets/FORTIFIER_LOGO.svg';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = React.useState(false);
@@ -16,7 +18,8 @@ const Navbar = () => {
     return (
         <nav className={styles.nav}>
             <Link to="/" className={styles.logo} onClick={closeNav}>
-                FORTIFIER<span style={{ color: '#ff1a1a' }}>.</span>
+                <img src={logo} alt="Fortifier Logo" className={styles.logoFull} />
+                <img src={shortLogo} alt="Fortifier Logo" className={styles.logoShort} />
             </Link>
 
             <button
@@ -42,6 +45,13 @@ const Navbar = () => {
                     onClick={closeNav}
                 >
                     About
+                </NavLink>
+                <NavLink
+                    to="/services"
+                    className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+                    onClick={closeNav}
+                >
+                    Services
                 </NavLink>
                 <NavLink
                     to="/contact"

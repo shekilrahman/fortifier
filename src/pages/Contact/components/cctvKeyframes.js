@@ -16,62 +16,153 @@ export const CCTV_KEYFRAMES = [
     },
     {
         offset: 0.1,
-        cctvposition: [-0.6, -0.3, -0.8],
-        cctvrotation: [0, -Math.PI / 4, 0],
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
         headposition: [0, 0, 0],
-        headrotation: [0, 0, 0],
+        headrotation: [Math.PI / 9, 0, -Math.PI / 6],
         lightAmbient: 0,
         lightDirectional: 0,
         spotlight: {
-            position: [0, 2, 2],
-            angle: 0.5,
-            intensity: 8,
-            distance: 5
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
         }
     },
     {
-        offset: 0.15,
-        cctvposition: [-0.6, -0.3, -1.5],
-        cctvrotation: [0, -Math.PI / 4, 0],
+        offset: 0.19,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
         headposition: [0, 0, 0],
-        headrotation: [0, 0, 0],
-        lightAmbient: 0.0,
-        lightDirectional: 0.2,
+        headrotation: [Math.PI / 16, 0, 0],
+        lightAmbient: 0,
+        lightDirectional: 0,
         spotlight: {
-            position: [2, 0, 2],
-            angle: 0.3,
-            intensity: 10,
-            distance: 8
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
         }
     },
     {
-        offset: 0.3,
-        cctvposition: [-0.6, -0.3, 1],
-        cctvrotation: [0, Math.PI / 4, 0],
+        offset: 0.27,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
         headposition: [0, 0, 0],
-        headrotation: [0, 0, 0],
-        lightAmbient: 0.15,
-        lightDirectional: 1,
+        headrotation: [Math.PI / 9, 0, Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
         spotlight: {
-            position: [0, 1, 1],
-            angle: 0.5,
-            intensity: 6,
-            distance: 3
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
         }
     },
     {
-        offset: 2,
-        cctvposition: [-0.6, -0.3, 1],
-        cctvrotation: [0, -Math.PI / 4, 0],
+        offset: 0.32,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
         headposition: [0, 0, 0],
-        headrotation: [0, 0, 0],
-        lightAmbient: 0.15,
-        lightDirectional: 1,
+        headrotation: [-Math.PI / 9, 0, -Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
         spotlight: {
-            position: [0, 1, 1],
-            angle: 0.5,
-            intensity: 0,
-            distance: 3
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+    {
+        offset: 0.46,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [-Math.PI / 9, 0, Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+    {
+        offset: 0.52,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [Math.PI / 9, 0, -Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+    {
+        offset: 0.66,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [Math.PI / 9, 0, Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+    {
+        offset: 0.73,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [-Math.PI / 9, 0, -Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+    {
+        offset: 0.87,
+        cctvposition: [-1.5, 0, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [-Math.PI / 9, 0, Math.PI / 6],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 1.5, 1.5],
+            angle: 0.7,
+            intensity: 20,
+            distance: 4
+        }
+    },
+
+    {
+        offset: 1,
+        cctvposition: [-1.5, -1.2, 0],
+        cctvrotation: [0, 0, 0],
+        headposition: [0, 0, 0],
+        headrotation: [0, 0, Math.PI / 8],
+        lightAmbient: 0,
+        lightDirectional: 0,
+        spotlight: {
+            position: [0, 0, 2.5],
+            angle: 0.7,
+            intensity: 50,
+            distance: 4.5
         }
     },
 ];
