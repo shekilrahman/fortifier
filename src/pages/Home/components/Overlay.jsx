@@ -3,6 +3,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
+import s1 from '../../../assets/s1.png';
+import s2 from '../../../assets/s2.png';
+import s3 from '../../../assets/s3.svg'; // Updated to SVG
+import Footer from '../../../components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,9 +71,35 @@ const Overlay = () => {
         >
             {/* HERO SECTION */}
             <section className={styles.hero}>
-                <h1 className={`${styles.heroTitle} ${styles.behind}`}>
-                    <img src={logo} alt="Logo" />
-                </h1>
+                <div className={styles.heroContent}>
+                    <h1 className={`${styles.heroTitle} ${styles.behind}`}>
+                        <img src={logo} alt="Logo" />
+                    </h1>
+                </div>
+
+                {/* Left Side Content */}
+                <div className={`${styles.heroSide} ${styles.heroLeft}`}>
+                    <p className={styles.sideText}>Professional CCTV & Security Systems</p>
+                    <span className={styles.sideLine}></span>
+                    <p className={styles.sideSubtext}>Homes & Businesses</p>
+                    <ul className={styles.sideList}>
+                        <li>CCTV Camera Systems</li>
+                        <li>Alarm Monitoring</li>
+                        <li>Access Control</li>
+                    </ul>
+                </div>
+
+                {/* Right Side Content */}
+                <div className={`${styles.heroSide} ${styles.heroRight}`}>
+                    <p className={styles.sideText}>Lifetime Workmanship Guarantee</p>
+                    <span className={styles.sideLine}></span>
+                    <p className={styles.sideSubtext}>Expert Installation</p>
+                    <ul className={styles.sideList}>
+                        <li>Free Security Quotes</li>
+                        <li>Fast Turnaround</li>
+                        <li>Local Support</li>
+                    </ul>
+                </div>
             </section>
 
             {/* OVERVIEW - LEFT */}
@@ -120,10 +150,18 @@ const Overlay = () => {
                 <p style={{ marginTop: '1.5rem', fontStyle: 'italic', color: '#ff1a1a' }}>
                     — Fortifier
                 </p>
-                <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end', opacity: 0.6 }}>
-                    <span>Hikvision Authorized</span>
-                    <span>•</span>
-                    <span>Expert Installation</span>
+
+                {/* Brand Marquee (Angled with Red Strips) */}
+                <div className={styles.brandBand}>
+                    <div className={styles.brandTrack}>
+                        {/* Duplicate for infinite scroll */}
+                        {[s1, s2, s3, s1, s2, s3, s1, s2, s3, s1, s2, s3].map((src, i) => (
+                            <React.Fragment key={i}>
+                                <img src={src} alt="Trusted Brand" className={styles.brandLogo} />
+                                <div className={styles.tapeSeparator}></div>
+                            </React.Fragment>
+                        ))}
+                    </div>
                 </div>
             </Section>
 
@@ -133,15 +171,36 @@ const Overlay = () => {
                     If you’re considering a new security system or upgrading an existing one, we’re here to help. We’ll take the time to understand your property and recommend a solution that actually suits your needs.
                     No pressure. No confusing tech talk. Just clear advice and professional installation.
                 </p>
-                <div className={styles.front}>
-                    <button className={styles.button}>
-                        Get a Quote
-                    </button>
+                <div className={styles.front} style={{ display: 'none' }}>
                 </div>
             </Section>
 
+            {/* FOOTER */}
+            <Footer />
+
             {/* Floating Contact Actions */}
             <div className={styles.floatingActions}>
+                {/* Quote Button */}
+                <a href="#" className={`${styles.actionButton} ${styles.quoteButton}`} aria-label="Get a Quote">
+                    <span className={styles.actionLabel}>Get a Quote</span>
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </a>
+
                 {/* Email Button */}
                 <a href="mailto:admin@fortifier.com.au" className={`${styles.actionButton} ${styles.emailButton}`} aria-label="Send Email">
                     <span className={styles.actionLabel}>admin@fortifier.com.au</span>

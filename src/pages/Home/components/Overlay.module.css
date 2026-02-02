@@ -76,6 +76,7 @@
     align-items: center;
     text-align: center;
     padding: 0 5%;
+    position: relative;
 }
 
 .heroTitle {
@@ -215,5 +216,193 @@
        Usually better to simply rely on the icon for mobile. */
     .actionLabel {
         display: none;
+    }
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Hero Side Content */
+.heroSide {
+    position: absolute;
+    top: 65%;
+    /* Moved down from 50% */
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.heroLeft {
+    left: 12%;
+    text-align: left;
+}
+
+.heroRight {
+    right: 12%;
+    text-align: right;
+}
+
+.sideText {
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.sideLine {
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #ff1a1a;
+    margin: 1rem 0;
+}
+
+.heroRight .sideLine {
+    margin-left: auto;
+}
+
+.sideSubtext {
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    margin: 0 0 1.5rem 0;
+}
+
+.sideList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.sideList li {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.sideList li:hover {
+    color: #ff1a1a;
+    cursor: default;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+    .heroSide {
+        max-width: 200px;
+    }
+
+    .sideText {
+        font-size: 0.85rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .heroSide {
+        display: none;
+    }
+}
+
+.footer {
+    width: 100%;
+    padding: 2rem 5%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.footerContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .footerContent {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* BRAND MARQUEE (Angled Tape Style) */
+.brandBand {
+    width: 120%;
+    /* Wider to cover rotation gaps */
+    background: #ffffff;
+    overflow: hidden;
+    padding: 1.5rem 0;
+    margin-top: 4rem;
+    margin-left: -10%;
+    /* Recenter after width inc */
+    transform: rotate(-3deg);
+    /* The requested Angle */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-top: 4px solid #ff1a1a;
+    border-bottom: 4px solid #ff1a1a;
+}
+
+.brandTrack {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: marquee 20s linear infinite;
+    padding-left: 2rem;
+    align-items: center;
+}
+
+.brandLogo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    /* mix-blend-mode: multiply; */
+    filter: none;
+    /* Keep original colors or standard */
+}
+
+/* Red 3-Strip Separator */
+.tapeSeparator {
+    width: 30px;
+    height: 40px;
+    background: repeating-linear-gradient(45deg,
+            #ff1a1a,
+            #ff1a1a 4px,
+            transparent 4px,
+            transparent 10px);
+    opacity: 0.8;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
     }
 }

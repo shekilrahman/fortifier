@@ -155,7 +155,7 @@ export const CCTV_KEYFRAMES = [
         cctvposition: [-1.5, -1.2, 0],
         cctvrotation: [0, 0, 0],
         headposition: [0, 0, 0],
-        headrotation: [0, 0, Math.PI / 8],
+        headrotation: [0, 0, Math.PI / 20],
         lightAmbient: 0,
         lightDirectional: 0,
         spotlight: {

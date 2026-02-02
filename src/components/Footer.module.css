@@ -1,0 +1,92 @@
+.footer {
+    width: 100%;
+    padding: 2rem 5% 2rem 1rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.footerContent {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footerLinks {
+    display: flex;
+    gap: 2rem;
+}
+
+.footerLinks span {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.footerLinks span:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* License Badge */
+.licenseBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.policeLogo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.licenseText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.licenseTitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.licenseIssuer {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.licenseAuthority {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #ff1a1a;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .footerContent {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .licenseBadge {
+        justify-content: center;
+    }
+}
