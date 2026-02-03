@@ -1,14 +1,75 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
-import s1 from '../../../assets/s1.png';
-import s2 from '../../../assets/s2.png';
-import s3 from '../../../assets/s3.svg'; // Updated to SVG
 import Footer from '../../../components/Footer';
 
+// Dynamically import all brand logos from the brands folder
+const brandLogoModules = import.meta.glob('../../../assets/brands/*.(png|svg|jpg|jpeg)', { eager: true });
+const brandLogos = Object.values(brandLogoModules).map((mod) => mod.default);
+
 gsap.registerPlugin(ScrollTrigger);
+
+// Brand Scanner Component
+const BrandScanner = ({ logos }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [phase, setPhase] = useState('fadeIn'); // fadeIn, scanH, scanV, fadeOut
+
+    useEffect(() => {
+        const phases = ['fadeIn', 'scanH', 'scanV', 'fadeOut'];
+        const durations = [800, 1000, 1000, 800]; // ms for each phase
+
+        let phaseIndex = 0;
+
+        const runPhase = () => {
+            setPhase(phases[phaseIndex]);
+
+            setTimeout(() => {
+                phaseIndex++;
+                if (phaseIndex >= phases.length) {
+                    // Move to next logo
+                    phaseIndex = 0;
+                    setCurrentIndex((prev) => (prev + 1) % logos.length);
+                }
+                runPhase();
+            }, durations[phaseIndex]);
+        };
+
+        runPhase();
+
+        return () => { };
+    }, [logos.length]);
+
+    return (
+        <div className={styles.scannerContainer}>
+            <div className={styles.scannerFrame}>
+                {/* Corner brackets */}
+                <div className={`${styles.scannerCorner} ${styles.topLeft}`}></div>
+                <div className={`${styles.scannerCorner} ${styles.topRight}`}></div>
+                <div className={`${styles.scannerCorner} ${styles.bottomLeft}`}></div>
+                <div className={`${styles.scannerCorner} ${styles.bottomRight}`}></div>
+
+                {/* Logo */}
+                <div className={`${styles.scannerLogo} ${styles[phase]}`}>
+                    <img src={logos[currentIndex]} alt="Brand Logo" />
+                </div>
+
+                {/* Horizontal scan line */}
+                <div className={`${styles.scanLineH} ${phase === 'scanH' ? styles.active : ''}`}></div>
+
+                {/* Vertical scan line */}
+                <div className={`${styles.scanLineV} ${phase === 'scanV' ? styles.active : ''}`}></div>
+            </div>
+
+            {/* Scan indicator */}
+            <div className={styles.scanIndicator}>
+                <span className={styles.scanDot}></span>
+                <span className={styles.scanText}>VERIFYING PARTNER</span>
+            </div>
+        </div>
+    );
+};
 
 const Section = ({ align, title, children, className = "", type = "behind" }) => {
     // Map align prop to css class
@@ -72,6 +133,11 @@ const Overlay = () => {
             {/* HERO SECTION */}
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
+                    <p className={styles.heroTagline}>
+                        <span>Security done right</span>
+                        <span>Installed once</span>
+                        <span className={styles.taglineHighlight}>Trusted for life</span>
+                    </p>
                     <h1 className={`${styles.heroTitle} ${styles.behind}`}>
                         <img src={logo} alt="Logo" />
                     </h1>
@@ -105,7 +171,7 @@ const Overlay = () => {
             {/* OVERVIEW - LEFT */}
             <Section align="left" title="What Sets Fortifier Apart" type="front">
                 <p>
-                    Security should work when you need it - without confusion or callbacks. That’s why every Fortifier system is planned properly, installed cleanly, and handed over in a way that actually makes sense. You’ll know how your system works, and you’ll know who to call if you ever need support.
+                    Security should work when you need it - without confusion or callbacks. That's why every Fortifier system is planned properly, installed cleanly, and handed over in a way that actually makes sense. You'll know how your system works, and you'll know who to call if you ever need support.
                 </p>
                 <p style={{ marginTop: '1rem' }}>
                     Every installation is backed by our lifetime workmanship guarantee, giving you long-term confidence that the job has been done right.
@@ -136,7 +202,7 @@ const Overlay = () => {
             {/* BENEFITS - LEFT */}
             <Section align="left" title="Lifetime Workmanship Guarantee" type='front'>
                 <p>
-                    Every Fortifier installation is backed by a lifetime workmanship guarantee. If an issue arises due to how your system was installed, we’ll fix it — no hassle, no runaround.
+                    Every Fortifier installation is backed by a lifetime workmanship guarantee. If an issue arises due to how your system was installed, we'll fix it — no hassle, no runaround.
                 </p>
 
             </Section>
@@ -144,31 +210,22 @@ const Overlay = () => {
             {/* TRUST/EXPERTISE - RIGHT */}
             <Section align="right" title="Trusted Brand" type='front'>
                 <p>
-                    "With a reliable layer of protection added to your premises, you’ll be able to sleep
+                    "With a reliable layer of protection added to your premises, you'll be able to sleep
                     soundly knowing that the things you care about are safe."
                 </p>
                 <p style={{ marginTop: '1.5rem', fontStyle: 'italic', color: '#ff1a1a' }}>
                     — Fortifier
                 </p>
 
-                {/* Brand Marquee (Angled with Red Strips) */}
-                <div className={styles.brandBand}>
-                    <div className={styles.brandTrack}>
-                        {/* Duplicate for infinite scroll */}
-                        {[s1, s2, s3, s1, s2, s3, s1, s2, s3, s1, s2, s3].map((src, i) => (
-                            <React.Fragment key={i}>
-                                <img src={src} alt="Trusted Brand" className={styles.brandLogo} />
-                                <div className={styles.tapeSeparator}></div>
-                            </React.Fragment>
-                        ))}
-                    </div>
-                </div>
+                {/* Brand Scanner */}
+                <BrandScanner logos={brandLogos} />
             </Section>
 
             {/* CTA - CENTER */}
             <Section align="center" title="Get a Free Quote" className="cta-section" type='front'>
+                <p className={styles.ctaTagline}>No Pressure, No Obligation<br />Free On-Site Security Assessment</p>
                 <p style={{ marginBottom: '3rem' }}>
-                    If you’re considering a new security system or upgrading an existing one, we’re here to help. We’ll take the time to understand your property and recommend a solution that actually suits your needs.
+                    If you're considering a new security system or upgrading an existing one, we're here to help. We'll take the time to understand your property and recommend a solution that actually suits your needs.
                     No pressure. No confusing tech talk. Just clear advice and professional installation.
                 </p>
                 <div className={styles.front} style={{ display: 'none' }}>
@@ -241,3 +298,4 @@ const Overlay = () => {
 };
 
 export default Overlay;
+

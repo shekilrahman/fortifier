@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
 import policeLogo from '../assets/police.png';
+import termsPdf from '../assets/Fortifier Terms & Conditions of Trade.pdf';
 
 const Footer = () => {
     return (
@@ -11,6 +12,7 @@ const Footer = () => {
                     <img src={policeLogo} alt="Queensland Police" className={styles.policeLogo} />
                     <div className={styles.licenseText}>
                         <span className={styles.licenseTitle}>Licensed Security Installer</span>
+                        <span className={styles.licenseNumber}>Lic. 4861857</span>
                         <span className={styles.licenseIssuer}>License issued by</span>
                         <span className={styles.licenseAuthority}>QUEENSLAND POLICE</span>
                     </div>
@@ -20,7 +22,7 @@ const Footer = () => {
 
                 <div className={styles.footerLinks}>
                     <span>Privacy Policy</span>
-                    <span>Terms of Service</span>
+                    <a href={termsPdf} download="Fortifier Terms & Conditions.pdf" className={styles.footerLink}>Terms & Conditions of Trade</a>
                 </div>
             </div>
         </footer>

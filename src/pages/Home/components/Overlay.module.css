@@ -62,6 +62,11 @@
     text-align: center;
 }
 
+.center .description {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .right {
     align-items: flex-end;
     text-align: right;
@@ -97,6 +102,72 @@
     max-width: 100%;
 }
 
+/* Hero Tagline */
+.heroTagline {
+    display: flex;
+    position: relative;
+    top: -170px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 1.5rem;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    width: 80vw;
+}
+
+.heroTagline span {
+    position: relative;
+}
+
+.heroTagline span:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #ff1a1a;
+    border-radius: 50%;
+}
+
+.taglineHighlight {
+    color: #ff1a1a;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(255, 26, 26, 0.4);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 .button {
     pointer-events: auto;
@@ -115,6 +186,16 @@
 .button:hover {
     background: #ff1a1a;
     color: #000000;
+}
+
+.ctaTagline {
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    color: #ff1a1a;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    line-height: 1.6;
 }
 
 /* Floating Contact Actions */
@@ -347,62 +428,214 @@
     }
 }
 
-/* BRAND MARQUEE (Angled Tape Style) */
-.brandBand {
-    width: 120%;
-    /* Wider to cover rotation gaps */
-    background: #ffffff;
-    overflow: hidden;
-    padding: 1.5rem 0;
-    margin-top: 4rem;
-    margin-left: -10%;
-    /* Recenter after width inc */
-    transform: rotate(-3deg);
-    /* The requested Angle */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+/* BRAND SCANNER */
+.scannerContainer {
+    margin-top: 3rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.scannerFrame {
     position: relative;
-    border-top: 4px solid #ff1a1a;
-    border-bottom: 4px solid #ff1a1a;
-}
-
-.brandTrack {
+    width: 320px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
     display: flex;
-    gap: 3rem;
-    width: max-content;
-    animation: marquee 20s linear infinite;
-    padding-left: 2rem;
     align-items: center;
+    justify-content: center;
 }
 
-.brandLogo {
-    height: 45px;
-    width: auto;
-    object-fit: contain;
-    /* mix-blend-mode: multiply; */
-    filter: none;
-    /* Keep original colors or standard */
-}
-
-/* Red 3-Strip Separator */
-.tapeSeparator {
+/* Corner brackets */
+.scannerCorner {
+    position: absolute;
     width: 30px;
-    height: 40px;
-    background: repeating-linear-gradient(45deg,
-            #ff1a1a,
-            #ff1a1a 4px,
-            transparent 4px,
-            transparent 10px);
-    opacity: 0.8;
+    height: 30px;
+    border-color: #ff1a1a;
+    border-style: solid;
+    border-width: 0;
 }
 
-@keyframes marquee {
+.topLeft {
+    top: 12px;
+    left: 12px;
+    border-top-width: 3px;
+    border-left-width: 3px;
+}
+
+.topRight {
+    top: 12px;
+    right: 12px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+}
+
+.bottomLeft {
+    bottom: 12px;
+    left: 12px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+}
+
+.bottomRight {
+    bottom: 12px;
+    right: 12px;
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+}
+
+/* Logo in scanner */
+.scannerLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 120px;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.scannerLogo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Logo phase animations */
+.scannerLogo.fadeIn {
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.scannerLogo.scanH,
+.scannerLogo.scanV {
+    opacity: 1;
+}
+
+.scannerLogo.fadeOut {
+    animation: fadeOutDown 0.8s ease-in forwards;
+}
+
+@keyframes fadeInDown {
     0% {
-        transform: translateX(0);
+        opacity: 0;
+        transform: translateY(-20px);
     }
 
     100% {
-        transform: translateX(-50%);
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Horizontal scan line */
+.scanLineH {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent,
+            #ff1a1a 20%,
+            #ff1a1a 80%,
+            transparent);
+    box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a;
+    opacity: 0;
+    top: 0;
+}
+
+.scanLineH.active {
+    opacity: 1;
+    animation: scanHorizontal 1s ease-in-out forwards;
+}
+
+@keyframes scanHorizontal {
+    0% {
+        top: 10%;
+    }
+
+    100% {
+        top: 90%;
+    }
+}
+
+/* Vertical scan line */
+.scanLineV {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,
+            transparent,
+            #ff1a1a 20%,
+            #ff1a1a 80%,
+            transparent);
+    box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a;
+    opacity: 0;
+    left: 0;
+}
+
+.scanLineV.active {
+    opacity: 1;
+    animation: scanVertical 1s ease-in-out forwards;
+}
+
+@keyframes scanVertical {
+    0% {
+        left: 10%;
+    }
+
+    100% {
+        left: 90%;
+    }
+}
+
+/* Scan indicator */
+.scanIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.scanDot {
+    width: 8px;
+    height: 8px;
+    background: #ff1a1a;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+.scanText {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
     }
 }

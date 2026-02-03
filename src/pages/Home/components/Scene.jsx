@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import React, { useRef, useLayoutEffect, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerformanceMonitor, Html } from '@react-three/drei';
 import { EffectComposer, Noise, Vignette, Bloom } from '@react-three/postprocessing';
@@ -6,9 +6,40 @@ import { BlendFunction } from 'postprocessing';
 import { Cctv } from '../../../components/Cctv';
 import { CCTV_KEYFRAMES } from './cctvKeyframes';
 
-// Custom Hook for Scroll
+// Custom Hook for Mouse Position (normalized -1 to 1)
+function useMousePosition() {
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = -((e.clientY / window.innerHeight) * 2 - 1);
+            setMousePos({ x, y });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    return mousePos;
+}
+
+// Custom Hook for Scroll with idle detection
 function useScrollOffset() {
     const [offset, setOffset] = useState(0);
+    const [isIdle, setIsIdle] = useState(false);
+    const idleTimerRef = useRef(null);
+    const IDLE_DELAY = 1500; // 1.5 seconds
+
+    const resetIdleTimer = useCallback(() => {
+        setIsIdle(false);
+        if (idleTimerRef.current) {
+            clearTimeout(idleTimerRef.current);
+        }
+        idleTimerRef.current = setTimeout(() => {
+            setIsIdle(true);
+        }, IDLE_DELAY);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,19 +48,26 @@ function useScrollOffset() {
             const scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
             // Clamp 0-1 standard
             setOffset(Math.min(Math.max(scrollProgress, 0), 1));
+            resetIdleTimer();
         };
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
         handleScroll();
 
+        // Start idle timer on mount
+        resetIdleTimer();
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleScroll);
+            if (idleTimerRef.current) {
+                clearTimeout(idleTimerRef.current);
+            }
         };
-    }, []);
+    }, [resetIdleTimer]);
 
-    return offset;
+    return { offset, isIdle };
 }
 
 // Helper: Interpolation
@@ -41,7 +79,7 @@ const lerpArray = (arr1, arr2, t) => [
 ];
 
 function SceneLighting() {
-    const offset = useScrollOffset();
+    const { offset } = useScrollOffset();
 
     // Refs for lights
     const ambientRef = useRef();
@@ -115,8 +153,32 @@ function SceneLighting() {
 
 function CameraRig({ cctvRef, headRef }) {
     const { camera } = useThree();
-    const offset = useScrollOffset();
+    const { offset, isIdle } = useScrollOffset();
+    const mousePos = useMousePosition();
     const debugRef = useRef();
+
+    // Track if initial load delay has passed (1 second)
+    const [isReady, setIsReady] = useState(false);
+
+    // Track if desktop (for mouse-follow - desktop only)
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    // Smooth mouse rotation values
+    const targetRotation = useRef({ x: 0, z: 0 });
+    const currentRotation = useRef({ x: 0, z: 0 });
+
+    // Enable mouse-follow after 1 second of page load (desktop only)
+    useEffect(() => {
+        const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+        checkDesktop();
+        window.addEventListener('resize', checkDesktop);
+
+        const timer = setTimeout(() => setIsReady(true), 1000);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkDesktop);
+        };
+    }, []);
 
     useLayoutEffect(() => {
         if (!cctvRef.current || !headRef.current) return;
@@ -124,8 +186,10 @@ function CameraRig({ cctvRef, headRef }) {
     }, [cctvRef, headRef]);
 
     useFrame((state) => {
+        const canFollowMouse = isReady && isIdle && isDesktop;
+
         if (debugRef.current) {
-            debugRef.current.innerText = `Scroll Offset: ${offset.toFixed(4)}`;
+            debugRef.current.innerText = `Scroll: ${offset.toFixed(4)} | Idle: ${isIdle} | Desktop: ${isDesktop} | Mouse Follow: ${canFollowMouse}`;
         }
 
         let startFrame = CCTV_KEYFRAMES[0];
@@ -145,32 +209,42 @@ function CameraRig({ cctvRef, headRef }) {
         const endData = endFrame;
 
         if (cctvRef.current && startData && endData) {
-            // BODY
+            // BODY - always use keyframe animation
             const bodyPos = lerpArray(startData.cctvposition, endData.cctvposition, progress);
             const bodyRot = lerpArray(startData.cctvrotation, endData.cctvrotation, progress);
             cctvRef.current.setBodyPosition(...bodyPos);
             cctvRef.current.setBodyRotation(...bodyRot);
 
-            // HEAD
-            const headPos = lerpArray(startData.headposition, endData.headposition, progress);
-            const headRot = lerpArray(startData.headrotation, endData.headrotation, progress);
+            // HEAD ROTATION
             if (cctvRef.current.setHeadRotation) {
-                cctvRef.current.setHeadRotation(...headRot);
+                if (canFollowMouse) {
+                    // Mouse-follow mode: Calculate target rotation from mouse position
+                    // X rotation (vertical tilt) based on mouse X
+                    // Z rotation (horizontal pan) based on mouse Y
+                    const maxRotation = Math.PI / 4; // ~45 degrees max rotation
+                    targetRotation.current.x = -mousePos.x * maxRotation;
+                    targetRotation.current.z = mousePos.y * maxRotation;
+
+                    // Smoothly interpolate current rotation towards target
+                    const smoothFactor = 0.08;
+                    currentRotation.current.x = lerp(currentRotation.current.x, targetRotation.current.x, smoothFactor);
+                    currentRotation.current.z = lerp(currentRotation.current.z, targetRotation.current.z, smoothFactor);
+
+                    cctvRef.current.setHeadRotation(currentRotation.current.x, 0, currentRotation.current.z);
+                } else {
+                    // Keyframe mode: Use scroll-based animation
+                    const headRot = lerpArray(startData.headrotation, endData.headrotation, progress);
+                    cctvRef.current.setHeadRotation(...headRot);
+
+                    // Update current rotation to match keyframe (for smooth transition)
+                    currentRotation.current.x = headRot[0];
+                    currentRotation.current.z = headRot[2];
+                }
             }
 
-            // Floating animation (Updated Step 317 logic: set directly)
+            // Floating animation
             const t = state.clock.getElapsedTime();
             cctvRef.current.setHeadPosition(Math.sin(t) * 0.05, 0, 0);
-
-            // Note: rotation updates from keyframes are applied above, creating a base state.
-            // If the user wants floating rotation too, they removed it in Step 317. 
-            // So I only apply setHeadPosition with sin wave here. 
-            // BUT wait, setHeadPosition overwrites the interpolated position!
-            // Step 317 removed the += logic and just did setHeadPosition(Math.sin...).
-            // This means the head scroll position (headPos) is IGNORED and overridden by the float.
-            // That might be intentional or a mistake by the user. 
-            // User request Step 317: "cctvRef.current.setHeadPosition(Math.sin(t) * 0.05, 0, 0);"
-            // I must faithfully reproduce this state, even if it ignores keyframe head position.
         }
     });
 

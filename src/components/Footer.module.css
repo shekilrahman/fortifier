@@ -68,6 +68,12 @@
     letter-spacing: 0.03em;
 }
 
+.licenseNumber {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
 .licenseIssuer {
     font-size: 0.65rem;
     color: rgba(255, 255, 255, 0.5);
@@ -78,6 +84,17 @@
     font-weight: 700;
     color: #ff1a1a;
     letter-spacing: 0.05em;
+}
+
+.footerLink {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.footerLink:hover {
+    color: #ff1a1a;
 }
 
 @media (max-width: 768px) {

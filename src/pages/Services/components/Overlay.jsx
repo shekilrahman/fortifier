@@ -207,10 +207,11 @@ const Overlay = () => {
 
             {/* FINAL CTA */}
             <section className={styles.ctaSection}>
-                <h2 className={styles.serviceTitleBig} style={{ fontSize: '3rem', marginBottom: '2rem' }}>
-                    Secure Your Future
+                <h2 className={styles.serviceTitleBig} style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
+                    Get a Free Quote
                 </h2>
-                <button className={styles.ctaButton}>Initialize Quote</button>
+                <p className={styles.ctaTagline}>No Pressure, No Obligation<br />Free On-Site Security Assessment</p>
+                <button className={styles.ctaButton}>Get Your Free Quote</button>
             </section>
 
             {/* FOOTER */}
