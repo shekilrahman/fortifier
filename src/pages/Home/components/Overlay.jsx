@@ -137,8 +137,8 @@ const Overlay = () => {
                     <span className={styles.sideLine}></span>
                     <p className={styles.sideSubtext}>Expert Installation</p>
                     <ul className={styles.sideList}>
-                        <li onClick={() => navigate('/contact')} className={styles.clickable}>Free Security Quotes</li>
-                        <li onClick={() => navigate('/contact')} className={styles.clickable}>Fast Turnaround</li>
+                        <li onClick={() => navigate('/contact')} className={styles.clickable}>Money back guarantee</li>
+                        <li onClick={() => navigate('/contact')} className={styles.clickable}>3+2 year Warranty</li>
                         <li onClick={() => navigate('/about')} className={styles.clickable}>Local Support</li>
                     </ul>
                 </div>

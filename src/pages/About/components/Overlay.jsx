@@ -74,7 +74,7 @@ const Overlay = () => {
             <section className={styles.hero}>
                 <p className={styles.heroSubtitle}>Professional Security Systems</p>
                 <h1 className={styles.heroTitle}>
-                    About<br />Fortifier
+                    About<br /><span style={{ color: '#ff1a1a' }}>Fortifier</span>
                 </h1>
                 <p className={styles.missionStatement} style={{ marginTop: '2rem', maxWidth: '1000px' }}>
                     Security isn’t just about cameras — it’s about doing the job <span className={styles.highlight}>right</span>, the first time.

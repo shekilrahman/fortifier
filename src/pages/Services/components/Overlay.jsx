@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,7 @@ const Section = ({ align, title, children, className = "", type = "behind" }) =>
 const Overlay = () => {
     const containerRef = useRef();
     const navigate = useNavigate();
+    const [hoveredBuilding, setHoveredBuilding] = useState(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -90,9 +91,16 @@ const Overlay = () => {
             // Visual: Simple Home Icon & Radar
             renderVisual: () => (
                 <div className={styles.visualContainer}>
-                    <div className={styles.homeContainer}>
+                    <div
+                        className={styles.homeContainer}
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={() => setHoveredBuilding('01')}
+                        onMouseLeave={() => setHoveredBuilding(null)}
+                    >
                         {/* Circular Radar */}
-                        <div className={styles.radarContainer}>
+                        <div
+                            className={styles.radarContainer}
+                        >
                             <div className={styles.radarSweep} />
                         </div>
 
@@ -110,14 +118,65 @@ const Overlay = () => {
             title: "Business CCTV Systems",
             desc: "Your business is your livelihood. Prevent theft, monitor staff safety, and provide valuable evidence.",
             features: ["Theft Prevention", "Staff Safety", "HD Recording", "Fast Install"],
-            // Visual: Monitor Wall with Glitch Scan
+            // Visual: Business Skyline / Factory
             renderVisual: () => (
                 <div className={styles.visualContainer}>
-                    <div className={styles.monitorWall}>
-                        <div className={styles.monitorScreen}><div className={styles.monitorScan}></div></div>
-                        <div className={styles.monitorScreen}><div className={styles.monitorScan}></div></div>
-                        <div className={styles.monitorScreen}><div className={styles.monitorScan}></div></div>
-                        <div className={styles.monitorScreen}><div className={styles.monitorScan}></div></div>
+                    <div className={styles.skylineContainer}>
+                        {/* Moon/Sun */}
+                        <div className={styles.skylineMoon}></div>
+
+                        {/* City Silhouette */}
+                        <div className={styles.building} style={{ height: '50%', left: '2%', width: '12%' }}></div>
+
+                        {/* Factory Building */}
+                        {/* Remove .factory class from container to avoid clipping smoke, remove bg/border */}
+                        <div
+                            className={styles.building}
+                            style={{
+                                height: '45%',
+                                left: '16%',
+                                width: '22%',
+                                background: 'transparent',
+                                border: 'none',
+                                boxShadow: 'none'
+                            }}
+                        >
+                            <div className={styles.factoryBody}></div>
+                            <div className={styles.smoke} style={{ left: '30%', animationDelay: '0s' }}></div>
+                            <div className={styles.smoke} style={{ left: '70%', animationDelay: '1.5s' }}></div>
+                        </div>
+
+                        {/* Tall Skyscraper */}
+                        <div
+                            className={`${styles.building} ${styles.skyscraper}`}
+                            style={{ height: '85%', left: '40%', width: '16%', cursor: 'pointer' }}
+                            onMouseEnter={() => setHoveredBuilding('02')}
+                            onMouseLeave={() => setHoveredBuilding(null)}
+                        >
+                            {/* Windows */}
+                            <div className={styles.window} style={{ top: '10%', left: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '10%', right: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '20%', left: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '20%', right: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '30%', left: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '30%', right: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '40%', left: '20%' }}></div>
+                            <div className={styles.window} style={{ top: '40%', right: '20%' }}></div>
+
+                            {/* Vertical Scan Effect */}
+                            <div className={styles.buildingScan}></div>
+                        </div>
+
+                        <div className={styles.building} style={{ height: '60%', left: '58%', width: '10%' }}></div>
+
+                        {/* Corporate Office */}
+                        <div className={`${styles.building} ${styles.skyscraper}`} style={{ height: '70%', left: '70%', width: '18%' }}>
+                            <div className={styles.windowRow} style={{ top: '15%' }}></div>
+                            <div className={styles.windowRow} style={{ top: '30%' }}></div>
+                            <div className={styles.windowRow} style={{ top: '45%' }}></div>
+                        </div>
+
+                        <div className={styles.building} style={{ height: '40%', right: '2%', width: '10%' }}></div>
                     </div>
                 </div>
             )
@@ -194,7 +253,15 @@ const Overlay = () => {
                             {/* Info Column */}
                             <div className={styles.infoCol}>
 
-                                <h2 className={styles.serviceTitleBig}>{service.title}</h2>
+                                <h2
+                                    className={styles.serviceTitleBig}
+                                    style={{
+                                        color: hoveredBuilding === service.id ? '#ff1a1a' : '#fff',
+                                        transition: 'color 0.3s ease'
+                                    }}
+                                >
+                                    {service.title}
+                                </h2>
                                 <p className={styles.serviceDescBig}>{service.desc}</p>
 
                                 <div className={styles.techFeatures}>

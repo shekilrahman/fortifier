@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Overlay.module.css';
-import termsPdf from '../../../assets/Fortifier Terms & Conditions of Trade.pdf';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -190,7 +190,7 @@ const Overlay = () => {
                     <div className={styles.integratedFooter}>
                         <div className={styles.footerLinks}>
                             <Link to="/privacy-policy" style={{ textDecoration: 'none', color: 'inherit' }}>Privacy Policy</Link>
-                            <a href={termsPdf} download="Fortifier Terms & Conditions.pdf">Terms & Conditions of Trade</a>
+                            <Link to="/terms" style={{ textDecoration: 'none', color: 'inherit' }}>Terms & Conditions of Trade</Link>
                             <br></br>
                             <span>&copy; {new Date().getFullYear()} Fortifier</span>
                         </div>
