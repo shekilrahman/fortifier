@@ -649,33 +649,75 @@
     border-color: #ff1a1a;
 }
 
-/* Responsive */
+/* ===================== RESPONSIVE STYLES ===================== */
+
+/* Tablet and Mobile */
 @media (max-width: 900px) {
+    .serviceSection {
+        height: auto;
+        min-height: 100vh;
+        padding: 6rem 5%;
+    }
+
     .serviceContent {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 3rem;
         text-align: center;
     }
 
     .visualCol {
-        order: -1;
+        order: -1 !important;
         margin-bottom: 2rem;
     }
 
-    .serviceIconLarge {
-        font-size: 8rem;
+    .visualContainer {
+        width: 100%;
+        height: 300px;
+        transform: scale(0.8);
+        transform-origin: center;
     }
 
     .infoCol {
         align-items: center;
     }
 
+    .serviceTitleBig {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin: 0 0 1.5rem 0;
+    }
+
     .serviceDescBig {
         font-size: 1rem;
         margin-bottom: 2rem;
+        max-width: 100%;
+        padding: 0 1rem;
     }
 
     .techFeatures {
         justify-content: center;
+    }
+
+    .heroTitle {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .floatingActions {
+        bottom: 1rem;
+        right: 1rem;
+        gap: 0.75rem;
+    }
+
+    .actionButton {
+        width: 50px;
+        height: 50px;
+    }
+
+    .actionLabel {
+        display: none;
     }
 }

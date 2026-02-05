@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useNavigate } from 'react-router-dom';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
 import Footer from '../../../components/Footer';
@@ -12,60 +13,23 @@ const brandLogos = Object.values(brandLogoModules).map((mod) => mod.default);
 gsap.registerPlugin(ScrollTrigger);
 
 // Brand Scanner Component
-const BrandScanner = ({ logos }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [phase, setPhase] = useState('fadeIn'); // fadeIn, scanH, scanV, fadeOut
-
-    useEffect(() => {
-        const phases = ['fadeIn', 'scanH', 'scanV', 'fadeOut'];
-        const durations = [800, 1000, 1000, 800]; // ms for each phase
-
-        let phaseIndex = 0;
-
-        const runPhase = () => {
-            setPhase(phases[phaseIndex]);
-
-            setTimeout(() => {
-                phaseIndex++;
-                if (phaseIndex >= phases.length) {
-                    // Move to next logo
-                    phaseIndex = 0;
-                    setCurrentIndex((prev) => (prev + 1) % logos.length);
-                }
-                runPhase();
-            }, durations[phaseIndex]);
-        };
-
-        runPhase();
-
-        return () => { };
-    }, [logos.length]);
+// Brand Marquee Component
+const BrandMarquee = ({ logos }) => {
+    // Duplicate logos to create seamless loop
+    const allLogos = [...logos, ...logos, ...logos, ...logos];
 
     return (
-        <div className={styles.scannerContainer}>
-            <div className={styles.scannerFrame}>
-                {/* Corner brackets */}
-                <div className={`${styles.scannerCorner} ${styles.topLeft}`}></div>
-                <div className={`${styles.scannerCorner} ${styles.topRight}`}></div>
-                <div className={`${styles.scannerCorner} ${styles.bottomLeft}`}></div>
-                <div className={`${styles.scannerCorner} ${styles.bottomRight}`}></div>
-
-                {/* Logo */}
-                <div className={`${styles.scannerLogo} ${styles[phase]}`}>
-                    <img src={logos[currentIndex]} alt="Brand Logo" />
-                </div>
-
-                {/* Horizontal scan line */}
-                <div className={`${styles.scanLineH} ${phase === 'scanH' ? styles.active : ''}`}></div>
-
-                {/* Vertical scan line */}
-                <div className={`${styles.scanLineV} ${phase === 'scanV' ? styles.active : ''}`}></div>
-            </div>
-
-            {/* Scan indicator */}
-            <div className={styles.scanIndicator}>
-                <span className={styles.scanDot}></span>
-                <span className={styles.scanText}>VERIFYING PARTNER</span>
+        <div className={styles.marqueeContainer}>
+            <div className={styles.marqueeTrack}>
+                {allLogos.map((logo, index) => (
+                    <div key={index} className={styles.marqueeCard}>
+                        <img
+                            src={logo}
+                            alt="Brand Logo"
+                            className={styles.marqueeLogo}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -94,6 +58,7 @@ const Section = ({ align, title, children, className = "", type = "behind" }) =>
 
 const Overlay = () => {
     const containerRef = useRef();
+    const navigate = useNavigate();
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -145,25 +110,35 @@ const Overlay = () => {
 
                 {/* Left Side Content */}
                 <div className={`${styles.heroSide} ${styles.heroLeft}`}>
-                    <p className={styles.sideText}>Professional CCTV & Security Systems</p>
+                    <p
+                        className={`${styles.sideText} ${styles.clickable}`}
+                        onClick={() => navigate('/services')}
+                    >
+                        Professional CCTV & Security Systems
+                    </p>
                     <span className={styles.sideLine}></span>
                     <p className={styles.sideSubtext}>Homes & Businesses</p>
                     <ul className={styles.sideList}>
-                        <li>CCTV Camera Systems</li>
-                        <li>Alarm Monitoring</li>
-                        <li>Access Control</li>
+                        <li onClick={() => navigate('/services')} className={styles.clickable}>CCTV Camera Systems</li>
+                        <li onClick={() => navigate('/services')} className={styles.clickable}>Alarm Monitoring</li>
+                        <li onClick={() => navigate('/services')} className={styles.clickable}>Access Control</li>
                     </ul>
                 </div>
 
                 {/* Right Side Content */}
                 <div className={`${styles.heroSide} ${styles.heroRight}`}>
-                    <p className={styles.sideText}>Lifetime Workmanship Guarantee</p>
+                    <p
+                        className={`${styles.sideText} ${styles.clickable}`}
+                        onClick={() => navigate('/about')}
+                    >
+                        Lifetime Workmanship Guarantee
+                    </p>
                     <span className={styles.sideLine}></span>
                     <p className={styles.sideSubtext}>Expert Installation</p>
                     <ul className={styles.sideList}>
-                        <li>Free Security Quotes</li>
-                        <li>Fast Turnaround</li>
-                        <li>Local Support</li>
+                        <li onClick={() => navigate('/contact')} className={styles.clickable}>Free Security Quotes</li>
+                        <li onClick={() => navigate('/contact')} className={styles.clickable}>Fast Turnaround</li>
+                        <li onClick={() => navigate('/about')} className={styles.clickable}>Local Support</li>
                     </ul>
                 </div>
             </section>
@@ -217,8 +192,8 @@ const Overlay = () => {
                     — Fortifier
                 </p>
 
-                {/* Brand Scanner */}
-                <BrandScanner logos={brandLogos} />
+                {/* Brand Marquee */}
+                <BrandMarquee logos={brandLogos} />
             </Section>
 
             {/* CTA - CENTER */}
@@ -238,7 +213,7 @@ const Overlay = () => {
             {/* Floating Contact Actions */}
             <div className={styles.floatingActions}>
                 {/* Quote Button */}
-                <a href="#" className={`${styles.actionButton} ${styles.quoteButton}`} aria-label="Get a Quote">
+                <div onClick={() => navigate('/contact')} className={`${styles.actionButton} ${styles.quoteButton}`} aria-label="Get a Quote">
                     <span className={styles.actionLabel}>Get a Quote</span>
                     <svg
                         width="24"
@@ -256,7 +231,7 @@ const Overlay = () => {
                         <line x1="16" y1="17" x2="8" y2="17"></line>
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                </a>
+                </div>
 
                 {/* Email Button */}
                 <a href="mailto:admin@fortifier.com.au" className={`${styles.actionButton} ${styles.emailButton}`} aria-label="Send Email">

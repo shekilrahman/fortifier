@@ -34,7 +34,7 @@
 
 
 .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2rem, 5vw, 4rem);
     margin: 0 0 1.5rem;
     font-weight: 600;
     line-height: 1.1;
@@ -42,6 +42,8 @@
     text-transform: uppercase;
     letter-spacing: -0.02em;
 }
+
+
 
 .description {
     font-size: clamp(1rem, 1.2vw, 1.25rem);
@@ -85,7 +87,7 @@
 }
 
 .heroTitle {
-    font-size: clamp(4rem, 12vw, 10rem);
+    font-size: clamp(3rem, 12vw, 10rem);
     margin: 0;
     font-weight: 700;
     letter-spacing: -0.05em;
@@ -280,25 +282,7 @@
     }
 }
 
-@media (max-width: 768px) {
-    .floatingActions {
-        bottom: 1.5rem;
-        right: 1.5rem;
-        gap: 1rem;
-    }
 
-    .actionButton {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* On mobile, maybe hide labels or keep them as is? 
-       Hover doesn't exist, but long press or tap might show it. 
-       Usually better to simply rely on the icon for mobile. */
-    .actionLabel {
-        display: none;
-    }
-}
 
 .heroContent {
     display: flex;
@@ -379,23 +363,7 @@
     cursor: default;
 }
 
-/* Responsive - Tablet */
-@media (max-width: 1024px) {
-    .heroSide {
-        max-width: 200px;
-    }
 
-    .sideText {
-        font-size: 0.85rem;
-    }
-}
-
-/* Responsive - Mobile */
-@media (max-width: 768px) {
-    .heroSide {
-        display: none;
-    }
-}
 
 .footer {
     width: 100%;
@@ -421,221 +389,151 @@
     gap: 1rem;
 }
 
+
+
+/* BRAND MARQUEE */
+.marqueeContainer {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-top: 3rem;
+    /* No mask image as requested */
+}
+
+.marqueeTrack {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+    animation: scroll 40s linear infinite;
+}
+
+.marqueeTrack:hover {
+    animation-play-state: paused;
+}
+
+.marqueeCard {
+    width: 140px;
+    height: 80px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.marqueeLogo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Original colors since it's on white bg now */
+    filter: none;
+    opacity: 1;
+    transition: transform 0.3s;
+}
+
+.marqueeLogo:hover {
+    transform: scale(1.05);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ===================== RESPONSIVE STYLES ===================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .heroSide {
+        max-width: 180px;
+    }
+
+    .sideText {
+        font-size: 0.85rem;
+    }
+
+    .sideList li {
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+    .heroSide {
+        display: none;
+    }
+
+    .hero {
+        justify-content: flex-start;
+        padding-top: 2rem;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .heroTagline {
+        width: 100%;
+        font-size: 1.1rem;
+        gap: 0.5rem;
+        padding: 0.8rem 1rem;
+        top: 0;
+        margin-bottom: 2rem;
+        justify-content: center;
+    }
+
+    .heroTitle {
+        top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .heroTitle img {
+        width: 95vw;
+    }
+
+    .section {
+        padding: 0 5%;
+        min-height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .title {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .floatingActions {
+        bottom: 1rem;
+        right: 1rem;
+        gap: 0.75rem;
+    }
+
+    .actionButton {
+        width: 50px;
+        height: 50px;
+    }
+
+    .actionLabel {
+        display: none;
+    }
+
     .footerContent {
         flex-direction: column;
         text-align: center;
     }
-}
 
-/* BRAND SCANNER */
-.scannerContainer {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 1rem;
-}
-
-.scannerFrame {
-    position: relative;
-    width: 320px;
-    height: 200px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Corner brackets */
-.scannerCorner {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-color: #ff1a1a;
-    border-style: solid;
-    border-width: 0;
-}
-
-.topLeft {
-    top: 12px;
-    left: 12px;
-    border-top-width: 3px;
-    border-left-width: 3px;
-}
-
-.topRight {
-    top: 12px;
-    right: 12px;
-    border-top-width: 3px;
-    border-right-width: 3px;
-}
-
-.bottomLeft {
-    bottom: 12px;
-    left: 12px;
-    border-bottom-width: 3px;
-    border-left-width: 3px;
-}
-
-.bottomRight {
-    bottom: 12px;
-    right: 12px;
-    border-bottom-width: 3px;
-    border-right-width: 3px;
-}
-
-/* Logo in scanner */
-.scannerLogo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 260px;
-    height: 120px;
-    background: white;
-    border-radius: 8px;
-    padding: 1rem;
-}
-
-.scannerLogo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Logo phase animations */
-.scannerLogo.fadeIn {
-    animation: fadeInDown 0.8s ease-out forwards;
-}
-
-.scannerLogo.scanH,
-.scannerLogo.scanV {
-    opacity: 1;
-}
-
-.scannerLogo.fadeOut {
-    animation: fadeOutDown 0.8s ease-in forwards;
-}
-
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeOutDown {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-}
-
-/* Horizontal scan line */
-.scanLineH {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent,
-            #ff1a1a 20%,
-            #ff1a1a 80%,
-            transparent);
-    box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a;
-    opacity: 0;
-    top: 0;
-}
-
-.scanLineH.active {
-    opacity: 1;
-    animation: scanHorizontal 1s ease-in-out forwards;
-}
-
-@keyframes scanHorizontal {
-    0% {
-        top: 10%;
-    }
-
-    100% {
-        top: 90%;
-    }
-}
-
-/* Vertical scan line */
-.scanLineV {
-    position: absolute;
-    top: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(180deg,
-            transparent,
-            #ff1a1a 20%,
-            #ff1a1a 80%,
-            transparent);
-    box-shadow: 0 0 10px #ff1a1a, 0 0 20px #ff1a1a;
-    opacity: 0;
-    left: 0;
-}
-
-.scanLineV.active {
-    opacity: 1;
-    animation: scanVertical 1s ease-in-out forwards;
-}
-
-@keyframes scanVertical {
-    0% {
-        left: 10%;
-    }
-
-    100% {
-        left: 90%;
-    }
-}
-
-/* Scan indicator */
-.scanIndicator {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.scanDot {
-    width: 8px;
-    height: 8px;
-    background: #ff1a1a;
-    border-radius: 50%;
-    animation: pulse 1s infinite;
-}
-
-.scanText {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.3;
+    .marqueeCard {
+        width: 100px;
+        height: 60px;
     }
 }

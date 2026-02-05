@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useNavigate } from 'react-router-dom';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
 import Footer from '../../../components/Footer';
@@ -30,6 +31,7 @@ const Section = ({ align, title, children, className = "", type = "behind" }) =>
 
 const Overlay = () => {
     const containerRef = useRef();
+    const navigate = useNavigate();
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -211,7 +213,7 @@ const Overlay = () => {
                     Get a Free Quote
                 </h2>
                 <p className={styles.ctaTagline}>No Pressure, No Obligation<br />Free On-Site Security Assessment</p>
-                <button className={styles.ctaButton}>Get Your Free Quote</button>
+                <button className={styles.ctaButton} onClick={() => navigate('/contact')}>Get Your Free Quote</button>
             </section>
 
             {/* FOOTER */}

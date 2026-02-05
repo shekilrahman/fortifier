@@ -1,181 +1,159 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Overlay.module.css';
-import logo from '../../../assets/FORTIFIER.svg';
+import policeLogo from '../../../assets/police.png';
+import termsPdf from '../../../assets/Fortifier Terms & Conditions of Trade.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Section = ({ align, title, children, className = "", type = "behind" }) => {
-    // Map align prop to css class
-    const alignClass = styles[align] || styles.left;
-    const typeClass = styles[type] || styles.behind;
-
-    return (
-        <section
-            className={`section-content ${styles.section} ${alignClass} ${className}`}
-        >
-            <div className={`section-inner ${styles.sectionInner} ${typeClass}`}>
-                <h2 className={styles.title}>
-                    {title}
-                </h2>
-                <div className={styles.description}>
-                    {children}
-                </div>
-            </div>
-        </section>
-    );
-};
+const EMAILJS_SERVICE_ID = 'service_rc21vcm';
+const EMAILJS_TEMPLATE_ID = 'template_epcn595';
+const EMAILJS_PUBLIC_KEY = 'TXBUYF0pCppJJMML7';
 
 const Overlay = () => {
     const containerRef = useRef();
+    const formRef = useRef();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+    const [status, setStatus] = useState(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            const sections = gsap.utils.toArray('.section-content');
+            // Animate Page Content
+            gsap.fromTo(`.${styles.infoColumn}`,
+                { x: -50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
+            );
 
-            sections.forEach((section) => {
-                const inner = section.querySelector('.section-inner');
-                // Skip animation for sections without inner content (like Hero)
-                if (!inner) return;
-
-                gsap.fromTo(inner,
-                    { y: 60, opacity: 0 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 1.2,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top 70%",
-                            end: "bottom 20%",
-                            toggleActions: "play reverse play reverse"
-                        }
-                    }
-                );
-            });
+            gsap.fromTo(`.${styles.formColumn}`,
+                { x: 50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.2, delay: 0.2, ease: "power3.out" }
+            );
         }, containerRef);
 
         return () => ctx.revert();
     }, []);
 
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setStatus('sending');
+
+        emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current, EMAILJS_PUBLIC_KEY)
+            .then((result) => {
+                console.log('SUCCESS!', result.text);
+                setStatus('success');
+                setFormData({ name: '', email: '', phone: '', message: '' });
+                setTimeout(() => setStatus(null), 5000);
+            }, (error) => {
+                console.log('FAILED...', error.text);
+                setStatus('error');
+                setTimeout(() => setStatus(null), 5000);
+            });
+    };
+
     return (
-        <div
-            ref={containerRef}
-            className={styles.overlay}
-        >
-            {/* HERO SECTION */}
-            <section className={styles.hero}>
-                <h1 className={`${styles.heroTitle} ${styles.behind}`}>
-                    <img src={logo} alt="Logo" />
-                </h1>
-            </section>
+        <div ref={containerRef} className={styles.overlay}>
 
-            {/* OVERVIEW - LEFT */}
-            <Section align="left" title="What Sets Fortifier Apart" type="front">
-                <p>
-                    Security should work when you need it - without confusion or callbacks. That’s why every Fortifier system is planned properly, installed cleanly, and handed over in a way that actually makes sense. You’ll know how your system works, and you’ll know who to call if you ever need support.
-                </p>
-                <p style={{ marginTop: '1rem' }}>
-                    Every installation is backed by our lifetime workmanship guarantee, giving you long-term confidence that the job has been done right.
-                </p>
-            </Section>
+            <div className={styles.splitSection}>
 
-            {/* SERVICES - RIGHT */}
-            <Section align="right" title="Our Services" type='front'>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    {[
-                        "CCTV Camera Systems : Clear, reliable monitoring day and night",
-                        "Alarm Systems : Intelligent intrusion detection you can depend on",
-                        "Video Doorbells & Intercoms : See and speak to visitors from anywhere",
-                        "Access Control : Confident control over who enters your property",
-                        "System Upgrades & Maintenance : Improve or expand existing systems"
-                    ].map((item, i) => (
-                        <li key={i} style={{
-                            marginBottom: '1rem',
-                            borderBottom: '1px solid rgba(255, 255, 255, 0.51)',
-                            paddingBottom: '0.5rem'
-                        }}>
-                            {item}
-                        </li>
-                    ))}
-                </ul>
-            </Section>
+                {/* LEFT: INFO, SOCIALS, & FOOTER CONTENT */}
+                <div className={styles.infoColumn}>
+                    <h1 className={styles.pageTitle}>
+                        Get In <span className={styles.highlight}>Touch</span>
+                    </h1>
 
-            {/* BENEFITS - LEFT */}
-            <Section align="left" title="Lifetime Workmanship Guarantee" type='front'>
-                <p>
-                    Every Fortifier installation is backed by a lifetime workmanship guarantee. If an issue arises due to how your system was installed, we’ll fix it — no hassle, no runaround.
-                </p>
+                    <p className={styles.infoDesc}>
+                        Ready to secure your property? Reach out for a free quote, technical support, or just some honest advice.
+                    </p>
 
-            </Section>
+                    <div className={styles.contactDetails}>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Call Us</span>
+                            <a href="tel:0403437040" className={styles.detailValue}>0403 437 040</a>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Email Us</span>
+                            <a href="mailto:admin@fortifier.com.au" className={styles.detailValue}>admin@fortifier.com.au</a>
+                        </div>
+                    </div>
 
-            {/* TRUST/EXPERTISE - RIGHT */}
-            <Section align="right" title="Trusted Brand" type='front'>
-                <p>
-                    "With a reliable layer of protection added to your premises, you’ll be able to sleep
-                    soundly knowing that the things you care about are safe."
-                </p>
-                <p style={{ marginTop: '1.5rem', fontStyle: 'italic', color: '#ff1a1a' }}>
-                    — Fortifier
-                </p>
-                <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'flex-end', opacity: 0.6 }}>
-                    <span>Hikvision Authorized</span>
-                    <span>•</span>
-                    <span>Expert Installation</span>
+                    <h3 className={styles.detailLabel} style={{ marginBottom: '1rem' }}>Connect With Us</h3>
+                    <div className={styles.socialRow}>
+                        <a href="https://wa.me/61403437040" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="WhatsApp">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        </a>
+                        <a href="https://www.instagram.com/fortifier_security?igsh=YmNsamk3a3draHNz" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://www.facebook.com/share/1FAugVfVpa/" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                    </div>
+
+                    {/* INTEGRATED FOOTER CONTENT */}
+                    <div className={styles.integratedFooter}>
+                        <div className={styles.licenseBadge}>
+                            <img src={policeLogo} alt="Queensland Police" className={styles.policeLogo} />
+                            <div className={styles.licenseText}>
+                                <span className={styles.licenseTitle}>Licensed Security Installer</span>
+                                <span className={styles.licenseNumber}>Lic. 4861857</span>
+                                <span className={styles.licenseIssuer}>License issued by</span>
+                                <span className={styles.licenseAuthority}>QUEENSLAND POLICE</span>
+                            </div>
+                        </div>
+                        <div className={styles.footerLinks}>
+                            <a href={termsPdf} download="Fortifier Terms & Conditions.pdf">Terms & Conditions</a>
+                            <span>&copy; {new Date().getFullYear()} Fortifier</span>
+                        </div>
+                    </div>
                 </div>
-            </Section>
 
-            {/* CTA - CENTER */}
-            <Section align="center" title="Get a Free Quote" className="cta-section" type='front'>
-                <p style={{ marginBottom: '3rem' }}>
-                    If you’re considering a new security system or upgrading an existing one, we’re here to help. We’ll take the time to understand your property and recommend a solution that actually suits your needs.
-                    No pressure. No confusing tech talk. Just clear advice and professional installation.
-                </p>
-                <div className={styles.front}>
-                    <button className={styles.button}>
-                        Get a Quote
-                    </button>
+                {/* RIGHT: FORM */}
+                <div className={styles.formColumn}>
+                    <form ref={formRef} className={styles.contactForm} onSubmit={handleSubmit}>
+                        <div className={styles.formGroup}>
+                            <label className={styles.formLabel}>Name</label>
+                            <input type="text" name="name" className={styles.formInput} required value={formData.name} onChange={handleChange} />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.formLabel}>Email</label>
+                            <input type="email" name="email" className={styles.formInput} required value={formData.email} onChange={handleChange} />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.formLabel}>Phone</label>
+                            <input type="tel" name="phone" className={styles.formInput} value={formData.phone} onChange={handleChange} />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label className={styles.formLabel}>Message</label>
+                            <textarea name="message" className={styles.formTextarea} required value={formData.message} onChange={handleChange}></textarea>
+                        </div>
+
+                        <button type="submit" className={styles.submitButton} disabled={status === 'sending'}>
+                            {status === 'sending' ? 'Sending...' : 'Send Message'}
+                        </button>
+
+                        {status === 'success' && (
+                            <div className={styles.feedbackMsg}>
+                                Sent! We'll stay in touch.
+                            </div>
+                        )}
+                        {status === 'error' && (
+                            <div className={styles.feedbackMsg} style={{ color: '#ff1a1a', borderColor: '#ff1a1a', background: 'rgba(255, 26, 26, 0.1)' }}>
+                                Failed to send. Please try again.
+                            </div>
+                        )}
+                    </form>
                 </div>
-            </Section>
-
-            {/* Floating Contact Actions */}
-            <div className={styles.floatingActions}>
-                {/* Email Button */}
-                <a href="mailto:admin@fortifier.com.au" className={`${styles.actionButton} ${styles.emailButton}`} aria-label="Send Email">
-                    <span className={styles.actionLabel}>admin@fortifier.com.au</span>
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </a>
-
-                {/* Phone Button */}
-                <a href="tel:0403437040" className={`${styles.actionButton} ${styles.phoneButton}`} aria-label="Call Us">
-                    <span className={styles.actionLabel}>040 3437 040</span>
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.05 12.05 0 0 0 2.81.57A2 2 0 0 1 22 16.92z"></path>
-                    </svg>
-                </a>
             </div>
         </div>
     );

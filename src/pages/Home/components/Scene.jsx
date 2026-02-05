@@ -247,28 +247,6 @@ function CameraRig({ cctvRef, headRef }) {
             cctvRef.current.setHeadPosition(Math.sin(t) * 0.05, 0, 0);
         }
     });
-
-    return (
-        <Html fullscreen style={{ pointerEvents: 'none', zIndex: 100 }}>
-            <div
-                ref={debugRef}
-                style={{
-                    position: 'absolute', // Updated Step 336
-                    bottom: '20px',
-                    right: '20px',
-                    background: 'rgba(0,0,0,0.7)',
-                    color: '#0f0',
-                    fontFamily: 'monospace',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    border: '1px solid #0f0',
-                    display: 'block'
-                }}
-            >
-                Scroll Offset: 0.0000
-            </div>
-        </Html>
-    );
 }
 
 export default function Scene() {
