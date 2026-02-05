@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 import policeLogo from '../assets/police.png';
 import termsPdf from '../assets/Fortifier Terms & Conditions of Trade.pdf';
@@ -21,7 +22,7 @@ const Footer = () => {
                 <p>&copy; {new Date().getFullYear()} Fortifier. All rights reserved.</p>
 
                 <div className={styles.footerLinks}>
-                    <span>Privacy Policy</span>
+                    <Link to="/privacy-policy" style={{ textDecoration: 'none', color: 'inherit' }}>Privacy Policy</Link>
                     <a href={termsPdf} download="Fortifier Terms & Conditions.pdf" className={styles.footerLink}>Terms & Conditions of Trade</a>
                 </div>
             </div>

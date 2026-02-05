@@ -507,13 +507,7 @@
     justify-content: center;
 }
 
-.serviceIndex {
-    font-family: monospace;
-    font-size: 1.5rem;
-    color: #ff1a1a;
-    margin-bottom: 1rem;
-    display: block;
-}
+
 
 .serviceTitleBig {
     font-size: clamp(3rem, 5vw, 5rem);

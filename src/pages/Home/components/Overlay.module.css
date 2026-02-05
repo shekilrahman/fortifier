@@ -303,11 +303,13 @@
 }
 
 .heroLeft {
+    margin-top: 60px;
     left: 12%;
     text-align: left;
 }
 
 .heroRight {
+    margin-top: 60px;
     right: 12%;
     text-align: right;
 }

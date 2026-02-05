@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
 import Footer from '../../../components/Footer';
+import GetAQuote from '../../../components/GetAQuote';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -192,7 +193,7 @@ const Overlay = () => {
 
                             {/* Info Column */}
                             <div className={styles.infoCol}>
-                                <span className={styles.serviceIndex}>SEQ_0{index + 1} // {service.id}</span>
+
                                 <h2 className={styles.serviceTitleBig}>{service.title}</h2>
                                 <p className={styles.serviceDescBig}>{service.desc}</p>
 
@@ -208,13 +209,7 @@ const Overlay = () => {
             </div>
 
             {/* FINAL CTA */}
-            <section className={styles.ctaSection}>
-                <h2 className={styles.serviceTitleBig} style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
-                    Get a Free Quote
-                </h2>
-                <p className={styles.ctaTagline}>No Pressure, No Obligation<br />Free On-Site Security Assessment</p>
-                <button className={styles.ctaButton} onClick={() => navigate('/contact')}>Get Your Free Quote</button>
-            </section>
+            <GetAQuote />
 
             {/* FOOTER */}
             <Footer />

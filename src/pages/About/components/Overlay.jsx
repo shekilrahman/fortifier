@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavigate } from 'react-router-dom';
 import styles from './Overlay.module.css';
 import Footer from '../../../components/Footer';
+import GetAQuote from '../../../components/GetAQuote';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,9 +88,7 @@ const Overlay = () => {
                 <div className={styles.gridContainer}>
                     {values.map((item) => (
                         <div key={item.id} className={`${styles.valueCard} ${item.size}`}>
-                            <div className={styles.cardHeader}>
-                                <span className={styles.cardNumber}>{item.id}</span>
-                            </div>
+
                             <div>
                                 <h3 className={styles.cardTitle}>{item.title}</h3>
                                 <p className={styles.cardDesc}>{item.desc}</p>
@@ -100,10 +99,7 @@ const Overlay = () => {
             </section>
 
             {/* CTA */}
-            <section className={styles.ctaSection}>
-                <h2 className={styles.ctaTitle}>Ready to Secure Your Property?</h2>
-                <button className={styles.ctaButton} onClick={() => navigate('/contact')}>Get a Free Quote</button>
-            </section>
+            <GetAQuote />
 
             {/* FOOTER */}
             <Footer />

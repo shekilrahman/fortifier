@@ -75,7 +75,7 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 1.5rem;
-    auto-rows: minmax(300px, auto);
+    grid-auto-rows: minmax(300px, auto);
 }
 
 /* CARD STYLES */
@@ -114,19 +114,9 @@
 }
 
 /* Card Content */
-.cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-}
 
-.cardNumber {
-    font-family: monospace;
-    font-size: 1rem;
-    color: #ff1a1a;
-    opacity: 0.8;
-}
+
+
 
 .cardIcon {
     width: 40px;
@@ -235,6 +225,7 @@
     background: #ff1a1a;
     border-color: #ff1a1a;
 }
+
 /* ===================== RESPONSIVE STYLES ===================== */
 
 /* Tablet */

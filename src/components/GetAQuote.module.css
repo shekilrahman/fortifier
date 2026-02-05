@@ -1,0 +1,59 @@
+.ctaSection {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #050505;
+}
+
+.ctaTitle {
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    color: #fff;
+    /* Copied from serviceTitleBig base but customized for CTA header if needed */
+}
+
+.ctaTagline {
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    color: #ff1a1a;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    line-height: 1.6;
+}
+
+.ctaButton {
+    padding: 1.5rem 4rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+    background: #ff1a1a;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    letter-spacing: 0.1em;
+}
+
+.ctaButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 26, 26, 0.4);
+}
+
+@media (max-width: 900px) {
+    .ctaSection {
+        height: auto;
+        min-height: 50vh;
+        padding: 4rem 1rem;
+    }
+
+    .ctaTitle {
+        font-size: 2.5rem;
+    }
+}

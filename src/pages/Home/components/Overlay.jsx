@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Overlay.module.css';
 import logo from '../../../assets/FORTIFIER.svg';
 import Footer from '../../../components/Footer';
+import GetAQuote from '../../../components/GetAQuote';
 
 // Dynamically import all brand logos from the brands folder
 const brandLogoModules = import.meta.glob('../../../assets/brands/*.(png|svg|jpg|jpeg)', { eager: true });
@@ -197,15 +198,9 @@ const Overlay = () => {
             </Section>
 
             {/* CTA - CENTER */}
-            <Section align="center" title="Get a Free Quote" className="cta-section" type='front'>
-                <p className={styles.ctaTagline}>No Pressure, No Obligation<br />Free On-Site Security Assessment</p>
-                <p style={{ marginBottom: '3rem' }}>
-                    If you're considering a new security system or upgrading an existing one, we're here to help. We'll take the time to understand your property and recommend a solution that actually suits your needs.
-                    No pressure. No confusing tech talk. Just clear advice and professional installation.
-                </p>
-                <div className={styles.front} style={{ display: 'none' }}>
-                </div>
-            </Section>
+            <div className={styles.front}>
+                <GetAQuote style={{ background: 'transparent' }} />
+            </div>
 
             {/* FOOTER */}
             <Footer />
