@@ -2,12 +2,18 @@ import React from 'react';
 import styles from './PrivacyPolicy.module.css';
 import logo from '../../assets/FORTIFIER.svg';
 import Footer from '../../components/Footer';
+import SEO from '../../components/SEO';
 import { ReactLenis } from 'lenis/react';
 
 const PrivacyPolicy = () => {
     return (
         <ReactLenis root>
             <div className={styles.container}>
+                <SEO
+                    title="Privacy Policy"
+                    description="Read our Privacy Policy to understand how we handle your personal information."
+                    url="/privacy-policy"
+                />
                 <div className={styles.content}>
                     <div className={styles.logoContainer}>
                         <img src={logo} alt="Fortifier Security Solutions" className={styles.logo} />

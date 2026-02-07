@@ -358,20 +358,64 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+    .splitSection {
+        align-items: center;
+        text-align: center;
+    }
+
     .pageTitle {
         font-size: 2.5rem;
+        text-align: center;
+        width: 100%;
     }
 
     .infoDesc {
         font-size: 1rem;
+        text-align: center;
+    }
+
+    .contactDetails {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    /* Keep contact info labels left aligned */
+    .contactDetails .detailLabel {
+        text-align: left;
+    }
+
+    /* "Connect With Us" and generic labels centered */
+    .detailLabel {
+        text-align: center;
+        display: block;
+        width: 100%;
     }
 
     .socialRow {
+        justify-content: center;
         gap: 1rem;
     }
 
     .socialIcon {
         width: 45px;
         height: 45px;
+    }
+
+    .integratedFooter {
+        align-items: center;
+    }
+
+    .footerLinks {
+        justify-content: center;
+    }
+
+    .submitButton {
+        align-self: center;
+    }
+
+    /* Left align form fields & specific labels per request */
+    .formGroup,
+    .formLabel {
+        text-align: left;
     }
 }

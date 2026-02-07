@@ -642,6 +642,7 @@
 .techFeatures {
     display: flex;
     flex-wrap: wrap;
+    /* Changed from nowrap to wrap for responsiveness */
     gap: 1.5rem;
 }
 
@@ -762,7 +763,8 @@
     .serviceSection {
         height: auto;
         min-height: 100vh;
-        padding: 6rem 5%;
+        padding: 4rem 5%;
+        /* Reduced top/bottom padding for mobile */
     }
 
     .serviceContent {
@@ -825,5 +827,45 @@
 
     .actionLabel {
         display: none;
+    }
+}
+
+/* Mobile Small (< 600px) */
+@media (max-width: 600px) {
+    .serviceSection {
+        padding: 3rem 1.5rem;
+        /* Even tighter padding */
+    }
+
+    .visualContainer {
+        transform: scale(0.65);
+        /* Scale down visuals further */
+        height: 260px;
+        /* Reduce container height */
+        margin-bottom: 1rem;
+    }
+
+    .serviceContent {
+        gap: 2rem;
+    }
+
+    .serviceTitleBig {
+        font-size: 2.2rem;
+        /* Fix huge text */
+        margin-bottom: 1rem;
+    }
+
+    .serviceDescBig {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .techFeatures {
+        gap: 0.8rem;
+    }
+
+    .techBadge {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
     }
 }

@@ -538,4 +538,10 @@
         width: 100px;
         height: 60px;
     }
+
+    .trustedQuote {
+        max-width: 300px;
+        margin-left: auto;
+    }
+
 }

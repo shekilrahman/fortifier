@@ -2,12 +2,18 @@ import React from 'react';
 import styles from './Terms.module.css';
 import logo from '../../assets/FORTIFIER.svg';
 import Footer from '../../components/Footer';
+import SEO from '../../components/SEO';
 import { ReactLenis } from 'lenis/react';
 
 const Terms = () => {
     return (
         <ReactLenis root>
             <div className={styles.container}>
+                <SEO
+                    title="Terms & Conditions"
+                    description="Read our Terms and Conditions of Trade."
+                    url="/terms"
+                />
                 <div className={styles.content}>
                     <div className={styles.logoContainer}>
                         <img src={logo} alt="Fortifier Security Solutions" className={styles.logo} />

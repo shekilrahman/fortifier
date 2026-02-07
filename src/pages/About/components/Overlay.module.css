@@ -260,6 +260,14 @@
 
     .valueCard {
         min-height: 200px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cardDesc {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .ctaTitle {

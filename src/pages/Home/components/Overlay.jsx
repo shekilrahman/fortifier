@@ -185,7 +185,7 @@ const Overlay = () => {
 
             {/* TRUST/EXPERTISE - RIGHT */}
             <Section align="right" title="Trusted Brand" type='front'>
-                <p>
+                <p className={styles.trustedQuote}>
                     "With a reliable layer of protection added to your premises, you'll be able to sleep
                     soundly knowing that the things you care about are safe."
                 </p>

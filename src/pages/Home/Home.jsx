@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import Scene from './components/Scene';
 import Overlay from './components/Overlay';
+import SEO from '../../components/SEO';
 import { ReactLenis } from 'lenis/react';
 
 import LoadingScreen from '../../components/LoadingScreen';
@@ -10,6 +11,11 @@ const Home = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: '#050505' }}>
+      <SEO
+        title="Premium Security Solutions"
+        description="Fortifier provides advanced protection services, including CCTV, alarms, and 24/7 monitoring for residential and commercial properties."
+        keywords="security, CCTV, alarms, monitoring, home security, business security, Fortifier"
+      />
       <LoadingScreen onFinished={() => setIsLoaded(true)} />
       <div style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 1s ease-in-out' }}>
         <Overlay />
